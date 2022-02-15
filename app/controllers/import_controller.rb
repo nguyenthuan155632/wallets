@@ -9,6 +9,8 @@ class ImportController < ApplicationController
       requester = RequestWalletApi.call(address: address).result
       wallet = Wallet.find_or_create_by(address: requester.address, user: current_user)
       requester.items.each do |item|
+        next unless item.contract_name
+
         token = Token.find_or_create_by(
           wallet: wallet,
           network: Network.binance_smart_chain(current_user),
