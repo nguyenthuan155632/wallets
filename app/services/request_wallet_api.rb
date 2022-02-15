@@ -16,7 +16,8 @@ class RequestWalletApi < Patterns::Service
       http.request(req)
     end
     data = JSON.parse(res.body, object_class: OpenStruct).data
-    whitelist = Trash.pluck(:contract_name)
+    blacklist = Trash.pluck(:contract_name)
+    whitelist = data.items.map(&:contract_name) - blacklist
 
     OpenStruct.new(
       address: data.address,
