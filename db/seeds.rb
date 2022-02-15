@@ -20,7 +20,7 @@ Trash.find_or_create_by(contract_name: 'yetiswap.io')
  "PlanetSandbox", "fry.world", "Poco Token", "Fusible | Fusible.io", "DinoX Coin", "LIGHTENING.CASH", "ACryptoS",
  "Tu7.org", "MetaWars", "Bemil", "NFTY Token", "USD Open Dollar", "Kryoss.Net", "ApeSwapFinance LPs",
  "Swap7.org", "MCDEX Token", "ApeSwapFinance Banana", "Dragon Warrior", "Meta Spatial", "AABEK.net", "HeroVerse Token",
- "Oly Sport", "NAOSToken", "TryHards", "SHIBA_DIVIDEND_TRACKER", "CZFarm", "DeathRoad xDRACEV2", "aaexchange.io", nil,
+ "Oly Sport", "NAOSToken", "TryHards", "SHIBA_DIVIDEND_TRACKER", "CZFarm", "DeathRoad xDRACEV2", "aaexchange.io",
  "Gunstar Metaverse", "Token GON+", "Green Beli", "h3x.exchange", "GameFi", "OpenOcean", "SyrupBar Token",
  "The Spartans", "IOI Token  via ChainPort.io", "IoTeX Network", "CryptEx Token", "ShopNext Token", "MetaMask.io",
  "Chainport.io-Peg Fear NFTs", "MDX Token", "Landshare Token", "Thetan Gem", "WIDI", "melloBsc.com", "Pet Kingdom Token",
