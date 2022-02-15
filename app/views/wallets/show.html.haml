@@ -2,7 +2,7 @@
   = @wallet.address
 .row
   .col-3
-    = select_tag 'network', options_for_select(Network.pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
+    = select_tag 'network', options_for_select(Network.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
   .col-3
     %button#refresh
       Refresh
