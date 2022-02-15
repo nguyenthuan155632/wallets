@@ -1,0 +1,22 @@
+%h1 Listing networks
+
+%table.table.table-stripped
+  %thead
+    %tr
+      %th Network name
+      %th Chain
+      %th
+      %th
+      %th
+
+  %tbody
+    - @networks.each do |network|
+      %tr
+        %td= network.network_name
+        %td= network.chain_id
+        %td= link_to 'Edit', edit_network_path(network)
+        %td= link_to 'Destroy', network, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Network', new_network_path

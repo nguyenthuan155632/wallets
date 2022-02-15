@@ -1,0 +1,39 @@
+%h2.mb-4
+  Wallets
+.row.mb-3
+  .col-3
+    %button#refresh
+      Refresh
+    %a{href: import_path, class: 'btn btn-primary'}
+      Import
+.row
+  .col-12
+    %table.table.table-stripped
+      %thead
+        %tr
+          %th Address
+          %th Balance
+          %th{style: 'width: 50px'} Actions
+      %tbody
+        - @wallets.each do |wallet|
+          %tr
+            %td
+              = link_to wallet.address, wallet_path(wallet)
+            %td
+              = wallet.tokens.sum(&:balance).ceil(2).to_s + ' USD'
+            %td
+              = link_to 'Delete', wallet_path(wallet), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }
+        %tr
+          %td
+          %td
+            %strong
+              = @total_balance.to_s + ' USD'
+
+:javascript
+  $('#refresh').on('click', function() {
+    $.ajax({
+      url: '/refresh',
+      type: 'GET',
+      async: true
+    })
+  })

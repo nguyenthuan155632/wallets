@@ -1,0 +1,11 @@
+= form_for @trash do |f|
+  - if @trash.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@trash.errors.count, "error")} prohibited this trash from being saved:"
+      %ul
+        - @trash.errors.full_messages.each do |message|
+          %li= message
+
+  = f.text_field :contract_name
+  .actions
+    = f.submit 'Save'

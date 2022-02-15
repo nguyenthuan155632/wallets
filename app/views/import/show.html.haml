@@ -1,0 +1,10 @@
+%h2.mb-4
+  Import Wallet
+= form_tag import_path, method: :post do
+  .row
+    .col-12
+      .mb-3
+        = text_area_tag :wallet_string, nil, class: 'form-control', rows: 20, required: true
+  .row
+    .col-12
+      %button.btn.btn-primary.mb-3{:type => "submit"} Bulk Insert

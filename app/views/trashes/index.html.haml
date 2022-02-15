@@ -1,0 +1,19 @@
+%h1 Listing trashes
+
+%table.table.table-stripped
+  %thead
+    %tr
+      %th Contract Name
+      %th
+      %th
+
+  %tbody
+    - @trashes.each do |trash|
+      %tr
+        %td= trash.contract_name
+        %td= link_to 'Edit', edit_trash_path(trash)
+        %td= link_to 'Destroy', trash, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Trash', new_trash_path
