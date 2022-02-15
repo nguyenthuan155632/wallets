@@ -8,8 +8,9 @@
 
 user = User.create(email: 'abc@gmail.com', password: '123456', password_confirmation: '123456')
 
-Trash.find_or_create_by(contract_name: 'PDot.io')
-Trash.find_or_create_by(contract_name: 'yetiswap.io')
+Trash.find_or_create_by(contract_name: 'Binance Coin')
+Trash.find_or_create_by(contract_name: 'BUSD Token')
+Trash.find_or_create_by(contract_name: 'Tether USD')
 
 Network.find_or_create_by(network_name: 'Binance Smart Chain', chain_id: 56, user: user)
 Network.find_or_create_by(network_name: 'Avalanche', chain_id: 43_114, user: user)
