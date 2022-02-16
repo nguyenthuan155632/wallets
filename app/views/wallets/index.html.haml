@@ -23,7 +23,7 @@
           %th Balance
           %th{style: 'width: 50px'} Actions
       %tbody
-        - @wallets.each_with_index(1) do |wallet, index|
+        - @wallets.each.with_index(1) do |wallet, index|
           %tr
             %td
               = index

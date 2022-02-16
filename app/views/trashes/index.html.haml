@@ -9,7 +9,7 @@
       %th
 
   %tbody
-    - @trashes.each_with_index(1) do |trash, index|
+    - @trashes.each.with_index(1) do |trash, index|
       %tr
         %td= index
         %td= trash.contract_name
