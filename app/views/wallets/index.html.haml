@@ -6,6 +6,8 @@
       Refresh
     %a{href: import_path, class: 'btn btn-primary'}
       Import
+  .col-3
+    = select_tag 'network', options_for_select(Network.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
 .row
   .col-12
     %table.table.table-stripped
@@ -20,7 +22,7 @@
             %td
               = link_to wallet.address, wallet_path(wallet)
             %td
-              = wallet.tokens.sum(&:balance).ceil(2).to_s + ' USD'
+              = wallet.tokens.left_joins(:network).where('networks.chain_id = ?', params[:chain_id].presence || 56).sum(&:balance).ceil(2).to_s + ' USD'
             %td
               = link_to 'Delete', wallet_path(wallet), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }
         %tr
@@ -30,10 +32,15 @@
               = @total_balance.to_s + ' USD'
 
 :javascript
+  $('#network').on('change', function() {
+    window.location.href = window.location.origin + window.location.pathname + '?chain_id=' + $(this).val()
+  })
+
   $('#refresh').on('click', function() {
     $.ajax({
-      url: '/refresh',
+      url: '/refresh?chain_id=' + $('#network').val(),
       type: 'GET',
       async: true
     })
+    alert('Refreshing')
   })

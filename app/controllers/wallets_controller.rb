@@ -3,8 +3,15 @@ class WalletsController < ApplicationController
   before_action :set_network, only: %i[show]
 
   def index
-    @wallets = Wallet.includes(:tokens).where(user: current_user)
-    @total_balance = Token.left_joins(:wallet).where('wallets.user_id = ?', current_user).sum(:balance).ceil(2)
+    @wallets =
+      Wallet.distinct
+            .left_joins(tokens: :network).where('networks.chain_id = ?', params[:chain_id].presence || 56)
+            .where(user: current_user)
+    @total_balance =
+      Token.left_joins(:wallet, :network)
+           .where('wallets.user_id = ? AND wallets.id IN (?) AND networks.chain_id = ?', current_user.id, @wallets.ids, params[:chain_id].presence || 56)
+           .sum(:balance)
+           .ceil(2)
   end
 
   def show

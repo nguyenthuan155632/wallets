@@ -18,8 +18,11 @@ class RefreshesController < ApplicationController
         token.update(balance: item.quote)
       end
     else
-      Network.where(user: current_user).each do |n|
-        Wallet.where(user: current_user).each do |w|
+      Network.where(user: current_user, chain_id: params[:chain_id]).each do |n|
+        Wallet.distinct
+              .left_joins(tokens: :network)
+              .where('networks.chain_id = ?', n.chain_id)
+              .where(user: current_user).each do |w|
           requester = RequestWalletApi.call(address: w.address, chain_id: n.chain_id).result
           requester.items.each do |item|
             token = Token.find_or_create_by(
