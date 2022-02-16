@@ -6,6 +6,8 @@
       Refresh
     %a{href: import_path, class: 'btn btn-primary'}
       Import
+    %a{href: winners_path, class: 'btn btn-primary'}
+      Winners
   .col-3
     = select_tag 'network', options_for_select(Network.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
 .row.mb-3

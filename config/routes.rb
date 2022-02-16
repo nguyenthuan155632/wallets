@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :wallets, only: %i[index show destroy]
   resources :trashes
-  resources :histories, only: %i[index]
+  resources :histories, only: %i[index show]
 
   get 'import', to: 'import#show'
   post 'import', to: 'import#create'

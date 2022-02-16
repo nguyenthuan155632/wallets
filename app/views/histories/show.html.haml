@@ -1,0 +1,11 @@
+.row.mb-3
+  .col-12
+    = link_to 'Check winners', winners_path, class: 'btn btn-primary'
+    = link_to 'Back to Listing', histories_path, class: 'btn btn-primary'
+    = link_to 'Wallets', wallets_path, class: 'btn btn-primary'
+.row
+  .col-12
+    %ol{start: '1'}
+      - Wallet.where(user: current_user, id: @history.wallets).each do |wallet|
+        %li
+          = link_to wallet.address, wallet_path(wallet)
