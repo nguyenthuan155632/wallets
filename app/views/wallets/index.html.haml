@@ -1,14 +1,14 @@
 %h2.mb-4
   Wallets
 .row.mb-3
-  .col-3
-    %button#refresh
+  .col-md-3.col-sm-12.mb-2
+    %button.btn.btn-primary#refresh
       Refresh
     %a{href: import_path, class: 'btn btn-primary'}
       Import
     %a{href: winners_path, class: 'btn btn-primary'}
       Winners
-  .col-3
+  .col-md-3.col-sm-12
     = select_tag 'network', options_for_select(Network.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
 .row.mb-3
   .col-12

@@ -13,7 +13,8 @@
   %tbody
     - @histories.each.with_index(1) do |history, index|
       %tr
-        %td= index
+        %td
+          = link_to index.to_s, history_path(history)
         %td
           - winners = Wallet.where(user: current_user, id: history.wallets)
           - if winners.present?

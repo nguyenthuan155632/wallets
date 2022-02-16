@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+@media only screen and (max-width: 600px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}

@@ -1,14 +1,14 @@
-%h2.mb-4
+%h2.mb-4{style: 'word-break: break-word;'}
   = @wallet.address
 .row
-  .col-3
+  .col-md-3.col-sm-12
     = select_tag 'network', options_for_select(Network.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
-  .col-3
-    %button#refresh
+  .col-md-3.col-sm-12
+    %button.btn.btn-primary#refresh
       Refresh
     %a{href: wallets_path, class: 'btn btn-primary'}
       Wallets
-.row.mb-3
+.row.mb-3.mt-2
   .col-12
     .form-check
       = check_box_tag :not_show_zero, 'true', params[:not_show_zero] == 'true', class: 'form-check-input'
@@ -16,9 +16,9 @@
 - @tokens.each do |token|
   .card.mb-2
     .row.no-gutters
-      .col-2
-        %img.card-img{:alt => token.contract_name, src: token.logo_url, style: 'padding: 20px'}/
-      .col-8
+      .col-md-2.col-sm-12.text-center
+        %img.card-img{:alt => token.contract_name, src: token.logo_url, style: 'padding: 20px; height: 200px; width: 200px;'}/
+      .col-md-8.col-sm-12
         .card-body
           %h5.card-title
             = token.contract_ticker_symbol
