@@ -18,12 +18,15 @@
     %table.table.table-stripped
       %thead
         %tr
+          %th #
           %th Address
           %th Balance
           %th{style: 'width: 50px'} Actions
       %tbody
-        - @wallets.each do |wallet|
+        - @wallets.each_with_index(1) do |wallet, index|
           %tr
+            %td
+              = index
             %td
               = link_to wallet.address, wallet_path(wallet)
             %td

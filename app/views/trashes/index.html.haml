@@ -3,13 +3,15 @@
 %table.table.table-stripped
   %thead
     %tr
+      %th #
       %th Contract Name
       %th
       %th
 
   %tbody
-    - @trashes.each do |trash|
+    - @trashes.each_with_index(1) do |trash, index|
       %tr
+        %td= index
         %td= trash.contract_name
         %td= link_to 'Edit', edit_trash_path(trash)
         %td= link_to 'Destroy', trash, method: :delete, data: { confirm: 'Are you sure?' }
