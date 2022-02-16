@@ -1,0 +1,31 @@
+%h2.mb-4
+  Check winners
+= form_tag winners_path, method: :post do
+  .row
+    .col-12
+      .mb-3
+        = text_area_tag :wallet_string, nil, class: 'form-control', rows: 20, required: true
+  .row
+    .col-12
+      %button.btn.btn-primary.mb-3{:type => "submit"} Check
+      %button#clear.btn.btn-primary.mb-3{:type => "button"} Clear
+
+:javascript
+  let input = $('#wallet_string')
+
+  $(document).ready(function(){
+    let winnerList = localStorage.getItem('winnerList')
+
+    if (winnerList) {
+      input.val(winnerList)
+    }
+  })
+
+  $('#clear').on('click', function() {
+    input.val('')
+    input.trigger('change')
+  })
+
+  input.on('change', function() {
+    localStorage.setItem('winnerList', $(this).val());
+  })

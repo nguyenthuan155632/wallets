@@ -16,7 +16,7 @@
     %header.mb-5
       .navbar.navbar-dark.bg-dark.shadow-sm
         .container.d-flex.justify-content-between
-          %a.navbar-brand.d-flex.align-items-center{:href => "#"}
+          %a.navbar-brand.d-flex.align-items-center{:href => root_path}
             %strong Wallets
           - if user_signed_in?
             %span{style: 'color: white'}

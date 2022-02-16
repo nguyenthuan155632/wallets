@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_15_040954) do
+ActiveRecord::Schema.define(version: 2022_02_16_063518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "histories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "wallets", default: [], array: true
+    t.text "note", default: ""
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_histories_on_user_id"
+  end
 
   create_table "networks", force: :cascade do |t|
     t.string "network_name", null: false
@@ -64,6 +73,7 @@ ActiveRecord::Schema.define(version: 2022_02_15_040954) do
     t.index ["user_id"], name: "index_wallets_on_user_id"
   end
 
+  add_foreign_key "histories", "users"
   add_foreign_key "networks", "users"
   add_foreign_key "tokens", "networks"
   add_foreign_key "tokens", "wallets"

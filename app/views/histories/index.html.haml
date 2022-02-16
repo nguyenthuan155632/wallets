@@ -1,0 +1,26 @@
+%h2 Histories
+
+.row.mb-3
+  .col-12
+    = link_to 'Check winners', winners_path, class: 'btn btn-primary'
+
+%table.table.table-stripped
+  %thead
+    %tr
+      %th #
+      %th Wallets
+
+  %tbody
+    - @histories.each.with_index(1) do |history, index|
+      %tr
+        %td= index
+        %td
+          - winners = Wallet.where(user: current_user, id: history.wallets)
+          - if winners.present?
+            - Wallet.where(user: current_user, id: history.wallets).each do |wallet|
+              = link_to wallet.address, wallet_path(wallet)
+              %br
+          - else
+            %strong.text-danger
+              Cười 1 cái =))
+%br
