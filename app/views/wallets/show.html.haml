@@ -12,7 +12,7 @@
   .col-12
     .form-check
       = check_box_tag :not_show_zero, 'true', params[:not_show_zero] == 'true', class: 'form-check-input'
-      %label.form-check-label Do not show Zero account
+      %label.form-check-label{for: 'not_show_zero'} Do not show Zero account
 - @tokens.each do |token|
   .card.mb-2
     .row.no-gutters

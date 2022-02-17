@@ -1,20 +1,29 @@
 %h2.mb-4
   Wallets
 .row.mb-3
-  .col-md-3.col-sm-12.mb-2
-    %button.btn.btn-primary#refresh
+  .col-md-12.col-sm-12.mb-2
+    %button.btn.btn-primary.mb-2#refresh
       Refresh
-    %a{href: import_path, class: 'btn btn-primary'}
+    %a{href: import_path, class: 'btn btn-primary mb-2'}
       Import
-    %a{href: winners_path, class: 'btn btn-primary'}
+    %a{href: winners_path, class: 'btn btn-primary mb-2'}
       Winners
+    %a{href: networks_path, class: 'btn btn-primary mb-2'}
+      Networks
+    %a{href: trashes_path, class: 'btn btn-primary mb-2'}
+      Trashes
+    %strong.mt-2{style: 'float: right;'}
+      Balance:
+      &nbsp;
+      = @total_balance.to_s + ' USD'
+.row
   .col-md-3.col-sm-12
     = select_tag 'network', options_for_select(Network.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
 .row.mb-3
   .col-12
     .form-check
       = check_box_tag :not_show_zero, 'true', params[:not_show_zero] == 'true', class: 'form-check-input'
-      %label.form-check-label Do not show Zero account
+      %label.form-check-label{for: 'not_show_zero'} Do not show Zero account
 .row
   .col-12
     %table.table.table-stripped
