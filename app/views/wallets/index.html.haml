@@ -4,14 +4,9 @@
   .col-md-12.col-sm-12.mb-2
     %button.btn.btn-primary.mb-2#refresh
       Refresh
-    %a{href: import_path, class: 'btn btn-primary mb-2'}
-      Import
-    %a{href: winners_path, class: 'btn btn-primary mb-2'}
-      Winners
-    %a{href: networks_path, class: 'btn btn-primary mb-2'}
-      Networks
-    %a{href: trashes_path, class: 'btn btn-primary mb-2'}
-      Trashes
+    %a{href: prices_path, class: 'btn btn-primary mb-2'}
+      Prices
+    = render '/pages'
     %strong.mt-2{style: 'float: right;'}
       Balance:
       &nbsp;

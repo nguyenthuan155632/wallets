@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_24_014325) do
+ActiveRecord::Schema.define(version: 2022_02_24_091202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 2022_02_24_014325) do
     t.index ["user_id"], name: "index_networks_on_user_id"
   end
 
+  create_table "prices", force: :cascade do |t|
+    t.string "contract_name", null: false
+    t.string "contract_ticker_symbol", null: false
+    t.decimal "quote_rate", default: "0.0", null: false
+    t.decimal "quote_rate_24h", default: "0.0", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tokens", force: :cascade do |t|
     t.bigint "wallet_id", null: false
     t.bigint "network_id", null: false
@@ -43,6 +52,8 @@ ActiveRecord::Schema.define(version: 2022_02_24_014325) do
     t.decimal "balance", default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "quote_rate"
+    t.decimal "quote_rate_24h"
     t.index ["contract_name"], name: "index_tokens_on_contract_name"
     t.index ["network_id"], name: "index_tokens_on_network_id"
     t.index ["wallet_id"], name: "index_tokens_on_wallet_id"

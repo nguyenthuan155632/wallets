@@ -14,11 +14,16 @@ class RefreshesController < ApplicationController
           network: network,
           contract_name: item.contract_name,
           contract_ticker_symbol: item.contract_ticker_symbol,
-          contract_address: item.contract_address
+          contract_address: item.contract_address,
         )
-        token.update(logo_url: item.logo_url)
-        token.update(balance: item.quote)
+        token.update(
+          logo_url: item.logo_url,
+          balance: item.quote,
+          quote_rate: item.quote_rate,
+          quote_rate_24h: item.quote_rate_24h
+        )
       end
+      CollectPricesFromTokens.call(user: current_user, network: network)
     else
       Network.where(user: current_user, chain_id: params[:chain_id]).each do |n|
         Wallet.where(user: current_user).each do |w|
@@ -33,10 +38,15 @@ class RefreshesController < ApplicationController
               contract_ticker_symbol: item.contract_ticker_symbol,
               contract_address: item.contract_address
             )
-            token.update(logo_url: item.logo_url)
-            token.update(balance: item.quote)
+            token.update(
+              logo_url: item.logo_url,
+              balance: item.quote,
+              quote_rate: item.quote_rate,
+              quote_rate_24h: item.quote_rate_24h
+            )
           end
         end
+        CollectPricesFromTokens.call(user: current_user, network: n)
       end
     end
   end

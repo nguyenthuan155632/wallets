@@ -1,0 +1,40 @@
+%h2.mb-4
+  Prices
+.row.mb-3
+  .col-md-12.col-sm-12.mb-2
+    %button.btn.btn-primary.mb-2#refresh
+      Refresh
+    %a{href: wallets_path, class: 'btn btn-primary mb-2'}
+      Wallets
+    = render partial: '/pages'
+.row
+  .col-12
+    %table.table.table-stripped
+      %thead
+        %tr
+          %th #
+          %th Contract Name
+          %th Contract Symbol
+          %th Price
+      %tbody
+        - @prices.each.with_index(1) do |price, index|
+          %tr
+            %td
+              = index
+            %td
+              = price.contract_name
+            %td
+              = price.contract_ticker_symbol
+            %td
+              = price.quote_rate.ceil(2)
+
+:javascript
+  $('#refresh').on('click', function() {
+    $.ajax({
+      url: '/refresh',
+      type: 'GET',
+      data: {chain_id: #{@networks.pluck(:chain_id)}},
+      async: true
+    })
+    alert('Refreshing')
+  })
