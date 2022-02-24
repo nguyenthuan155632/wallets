@@ -7,6 +7,8 @@ class CollectPricesFromTokens < Patterns::Service
   def call
     Token.joins(:wallet).where('wallets.user_id = ? AND network_id = ?', user.id, network.id).group_by(&:contract_name).each do |_, tokens|
       token = tokens.first
+      next if Trash.exists?(contract_name: token.contract_name)
+
       price = Price.find_by(contract_name: token.contract_name)
       if price
         price.update(
