@@ -6,8 +6,11 @@ class ImportController < ApplicationController
   def create
     addresses = params[:wallet_string].split("\r\n").compact.uniq
     addresses.each do |address|
-      requester = RequestWalletApi.call(address: address).result
-      wallet = Wallet.find_or_create_by(address: requester.address, user: current_user)
+      wallet = Wallet.find_by('LOWER(wallets.address) = ? AND wallets.user_id = ?', address.downcase, current_user.id)
+      next if wallet
+
+      wallet = Wallet.create(address: address, user: current_user)
+      requester = RequestWalletApi.call(address: wallet.address).result
       requester.items.each do |item|
         next unless item.contract_name
 
