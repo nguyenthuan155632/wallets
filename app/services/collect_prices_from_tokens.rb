@@ -10,16 +10,16 @@ class CollectPricesFromTokens < Patterns::Service
       price = Price.find_by(contract_name: token.contract_name)
       if price
         price.update(
-          quote_rate: token.quote_rate,
-          quote_rate_24h: token.quote_rate_24h,
+          quote_rate: token.quote_rate.to_f,
+          quote_rate_24h: token.quote_rate_24h.to_f,
           contract_ticker_symbol: token.contract_ticker_symbol
         )
       else
         Price.create(
           contract_name: token.contract_name,
           contract_ticker_symbol: token.contract_ticker_symbol,
-          quote_rate: token.quote_rate,
-          quote_rate_24h: token.quote_rate_24h
+          quote_rate: token.quote_rate.to_f,
+          quote_rate_24h: token.quote_rate_24h.to_f
         )
       end
     end
