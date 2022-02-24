@@ -9,7 +9,7 @@ class ImportController < ApplicationController
       wallet = Wallet.find_by('LOWER(wallets.address) = ? AND wallets.user_id = ?', address.downcase, current_user.id)
       next if wallet
 
-      wallet = Wallet.create(address: address, user: current_user)
+      wallet = Wallet.create(address: address.strip, user: current_user)
       requester = RequestWalletApi.call(address: wallet.address).result
       requester.items.each do |item|
         next unless item.contract_name
