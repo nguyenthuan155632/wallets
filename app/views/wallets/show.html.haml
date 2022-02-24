@@ -37,7 +37,7 @@
             %br
             %strong
               Price:
-            = token.quote_rate.to_f.ceil(2).to_s + ' USD'
+            = token.quote_rate.to_f.ceil(10).to_s
           %a.btn.btn-primary{:href => "https://bscscan.com/address/#{@wallet.address}", target: '_blank'} View on BSCscan
 
 :javascript
