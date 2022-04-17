@@ -85,6 +85,7 @@ GEM
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.1.9)
+    connection_pool (2.2.5)
     crass (1.0.6)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -190,6 +191,7 @@ GEM
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.6.0)
     regexp_parser (2.2.1)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -215,6 +217,10 @@ GEM
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
     sexp_processor (4.15.3)
+    sidekiq (6.4.1)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     spring (3.1.1)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -279,6 +285,7 @@ DEPENDENCIES
   rails-patterns
   sass-rails (>= 6)
   selenium-webdriver
+  sidekiq
   spring
   turbolinks (~> 5)
   tzinfo-data
@@ -290,4 +297,4 @@ RUBY VERSION
    ruby 2.6.6p146
 
 BUNDLED WITH
-   2.2.16
+   2.3.11
