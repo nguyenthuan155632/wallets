@@ -14,11 +14,6 @@
 .row
   .col-md-3.col-sm-12
     = select_tag 'network', options_for_select(Network.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
-.row.mb-3
-  .col-12
-    .form-check
-      = check_box_tag :not_show_zero, 'true', params[:not_show_zero] == 'true', class: 'form-check-input'
-      %label.form-check-label{for: 'not_show_zero'} Do not show Zero account
 .row
   .col-12
     %table.table.table-stripped
@@ -51,12 +46,6 @@
     let queryParams = new URLSearchParams(window.location.search)
     queryParams.set('chain_id', $(this).val())
     history.replaceState(null, null, "?"+queryParams.toString())
-    window.location.href = window.location.origin + window.location.pathname + '?' + queryParams.toString()
-  })
-
-  $('#not_show_zero').on('change', function() {
-    let queryParams = new URLSearchParams(window.location.search)
-    queryParams.set('not_show_zero', $(this).is(':checked'))
     window.location.href = window.location.origin + window.location.pathname + '?' + queryParams.toString()
   })
 

@@ -8,11 +8,6 @@
       Refresh
     %a{href: wallets_path, class: 'btn btn-primary'}
       Wallets
-.row.mb-3.mt-2
-  .col-12
-    .form-check
-      = check_box_tag :not_show_zero, 'true', params[:not_show_zero] == 'true', class: 'form-check-input'
-      %label.form-check-label{for: 'not_show_zero'} Do not show Zero account
 - @tokens.each do |token|
   .card.mb-2
     .row.no-gutters
@@ -45,12 +40,6 @@
     let queryParams = new URLSearchParams(window.location.search)
     queryParams.set('chain_id', $(this).val())
     history.replaceState(null, null, "?"+queryParams.toString())
-    window.location.href = window.location.origin + window.location.pathname + '?' + queryParams.toString()
-  })
-
-  $('#not_show_zero').on('change', function() {
-    let queryParams = new URLSearchParams(window.location.search)
-    queryParams.set('not_show_zero', $(this).is(':checked'))
     window.location.href = window.location.origin + window.location.pathname + '?' + queryParams.toString()
   })
 
