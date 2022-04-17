@@ -32,6 +32,7 @@ gem 'devise'
 gem "haml-rails", "~> 2.0"
 gem "rails-patterns"
 gem 'sidekiq'
+gem 'whenever', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
