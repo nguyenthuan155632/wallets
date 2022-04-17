@@ -8,7 +8,7 @@ class RefreshesController < ApplicationController
       requester = RequestWalletApi.call(address: wallet.address, chain_id: network.chain_id).result
       requester.items.each do |item|
         next unless item.contract_name
-        # next if item.quote.zero?
+        next if item.quote.zero?
 
         token = Token.find_or_create_by(
           wallet: wallet,
@@ -31,7 +31,7 @@ class RefreshesController < ApplicationController
           requester = RequestWalletApi.call(address: w.address, chain_id: n.chain_id).result
           requester.items.each do |item|
             next unless item.contract_name
-            # next if item.quote.zero?
+            next if item.quote.zero?
 
             token = Token.find_or_create_by(
               wallet: w,
