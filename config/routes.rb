@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
   root to: 'wallets#index'
 
-  resources :wallets, only: %i[index show destroy]
+  resources :wallets, only: %i[index show destroy] do
+    delete :bulk_delete, on: :collection
+  end
   resources :trashes
   resources :histories, only: %i[index show]
   resources :prices, only: %i[index]

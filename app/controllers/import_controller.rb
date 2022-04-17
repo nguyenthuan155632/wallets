@@ -7,6 +7,7 @@ class ImportController < ApplicationController
     addresses = params[:wallet_string].split("\r\n").compact.uniq
     network = Network.binance_smart_chain(current_user)
     addresses.each do |address|
+      next if address.blank?
       wallet = Wallet.find_by('LOWER(wallets.address) = ? AND wallets.user_id = ?', address.downcase, current_user.id)
       next if wallet
 
