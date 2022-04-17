@@ -6,8 +6,8 @@ class WalletsController < ApplicationController
     @wallets = Wallet.distinct.where(user: current_user).order(:id)
     if params[:not_show_zero] == 'true'
       @wallets =
-        @wallets.left_joins(tokens: :network).where('networks.chain_id = ?  ', params[:chain_id].presence || 56)
-                .where('tokens.balance > ?', 0.0)
+        @wallets.left_joins(tokens: :network)
+                .where('networks.chain_id = ? AND tokens.balance > ?', params[:chain_id].presence || 56, 0.0)
     end
     @total_balance =
       Token.left_joins(:wallet, :network)
