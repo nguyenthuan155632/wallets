@@ -13,8 +13,8 @@
 #   rake "some:great:rake:task"
 # end
 #
-every 10.minutes do
-  runner "RefreshDailyJob.perform_later"
-end
+# every 10.minutes do
+#   runner "RefreshDailyJob.perform_later"
+# end
 
 # Learn more: http://github.com/javan/whenever
