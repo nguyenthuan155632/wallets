@@ -5,7 +5,7 @@ class WalletsController < ApplicationController
   def index
     @wallets =
       Wallet.distinct
-            .left_joins(tokens: :network).where('networks.chain_id = ?', params[:chain_id].presence || 56)
+            .left_joins(tokens: :network).where('networks.chain_id = ? OR tokens.wallet_id IS NULL', params[:chain_id].presence || 56)
             .where(user: current_user)
     @wallets = @wallets.where('tokens.balance > ?', 0.0) if params[:not_show_zero] == 'true'
     @total_balance =
