@@ -6,7 +6,7 @@ class RefreshesController < ApplicationController
     if wallet
       network = Network.find_by(chain_id: params[:chain_id], user: current_user) || Network.binance_smart_chain(current_user)
       requester = RequestWalletApi.call(address: wallet.address, chain_id: network.chain_id).result
-      next if requester.nil?
+      return if requester.nil?
 
       requester.items.each do |item|
         next unless item.contract_name
