@@ -1,9 +1,11 @@
 class RefreshDailyJob < ApplicationJob
   def perform
     User.all.each do |user|
-      Network.where(user: user).each do |n|
+      Network.where(user: user, chain_id: 56).each do |n|
         Wallet.where(user: user).each do |w|
           requester = RequestWalletApi.call(address: w.address, chain_id: n.chain_id).result
+          next if requester.nil?
+
           requester.items.each do |item|
             next unless item.contract_name
             next if item.quote.zero?

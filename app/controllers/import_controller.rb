@@ -12,6 +12,8 @@ class ImportController < ApplicationController
 
       wallet = Wallet.create(address: address.strip, user: current_user)
       requester = RequestWalletApi.call(address: wallet.address).result
+      next if requester.nil?
+
       requester.items.each do |item|
         next unless item.contract_name
 
