@@ -10,7 +10,6 @@ class RefreshesController < ApplicationController
 
       requester.items.each do |item|
         next unless item.contract_name
-        next if item.quote.zero?
 
         token = Token.find_or_create_by(
           wallet: wallet,
@@ -25,6 +24,8 @@ class RefreshesController < ApplicationController
           quote_rate: item.quote_rate,
           quote_rate_24h: item.quote_rate_24h
         )
+        token.reload
+        token.destroy if token.balance.zero?
       end
       CollectPricesFromTokens.call(user: current_user, network: network)
     else
@@ -35,7 +36,6 @@ class RefreshesController < ApplicationController
 
           requester.items.each do |item|
             next unless item.contract_name
-            next if item.quote.zero?
 
             token = Token.find_or_create_by(
               wallet: w,
@@ -50,6 +50,8 @@ class RefreshesController < ApplicationController
               quote_rate: item.quote_rate,
               quote_rate_24h: item.quote_rate_24h
             )
+            token.reload
+            token.destroy if token.balance.zero?
           end
         end
         CollectPricesFromTokens.call(user: current_user, network: n)
