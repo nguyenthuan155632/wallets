@@ -8,7 +8,6 @@ class RefreshDailyJob < ApplicationJob
 
           requester.items.each do |item|
             next unless item.contract_name
-            next if item.quote.zero?
   
             token = Token.find_or_create_by(
               wallet: w,
@@ -23,6 +22,8 @@ class RefreshDailyJob < ApplicationJob
               quote_rate: item.quote_rate,
               quote_rate_24h: item.quote_rate_24h
             )
+            token.reload
+            token.destroy if token.balance.zero?
           end
         end
         # CollectPricesFromTokens.call(user: user, network: n)
