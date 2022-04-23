@@ -16,6 +16,11 @@ Rails.application.routes.draw do
   resources :trashes
   resources :histories, only: %i[index show]
   resources :prices, only: %i[index]
+  resources :tokens, only: %i[] do
+    member do
+      delete :trash
+    end
+  end
 
   get 'import', to: 'import#show'
   post 'import', to: 'import#create'

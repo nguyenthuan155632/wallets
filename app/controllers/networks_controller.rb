@@ -44,7 +44,7 @@ class NetworksController < ApplicationController
 
   # DELETE /networks/1 or /networks/1.json
   def destroy
-    @network.destroy
+    @network.destroy if @network.chain_id != 56
 
     respond_to do |format|
       format.html { redirect_to networks_url, notice: "Network was successfully destroyed." }
@@ -60,6 +60,6 @@ class NetworksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def network_params
-      params.require(:network).permit(:network_name, :chain_id)
+      params.require(:network).permit(:network_name, :chain_id, :active)
     end
 end

@@ -29,7 +29,7 @@ class RefreshesController < ApplicationController
       end
       CollectPricesFromTokens.call(user: current_user, network: network)
     else
-      Network.where(user: current_user, chain_id: params[:chain_id]).each do |n|
+      Network.where(user: current_user, chain_id: params[:chain_id]).actived.each do |n|
         Wallet.where(user: current_user).each do |w|
           requester = RequestWalletApi.call(address: w.address, chain_id: n.chain_id).result
           next if requester.nil?
@@ -57,5 +57,6 @@ class RefreshesController < ApplicationController
         CollectPricesFromTokens.call(user: current_user, network: n)
       end
     end
+    Token.where(contract_name: Trash.pluck(:contract_name)).destroy_all
   end
 end

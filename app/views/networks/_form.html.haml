@@ -5,12 +5,15 @@
       %ul
         - @network.errors.full_messages.each do |message|
           %li= message
-
-  .field
-    = f.label :network_name
-    = f.text_field :network_name
-  .field
-    = f.label :chain_id
-    = f.number_field :chain_id
-  .actions
+  %table.table.mt-3
+    %tr
+      %td= f.label :network_name
+      %td= f.text_field :network_name
+    %tr
+      %td= f.label :chain_id
+      %td= f.number_field :chain_id
+    %tr
+      %td= f.label :active
+      %td= f.check_box :active
+  .actions.mt-2.mb-2
     = f.submit 'Save'

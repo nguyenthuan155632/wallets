@@ -5,7 +5,10 @@
       %ul
         - @trash.errors.full_messages.each do |message|
           %li= message
-
-  = f.text_field :contract_name
-  .actions
+  %table.table.mt-3
+    %tr
+      %td Contract Name
+      %td
+        = f.text_field :contract_name
+  .actions.mt-2.mb-2
     = f.submit 'Save'

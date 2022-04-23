@@ -13,13 +13,13 @@
       = @total_balance.to_s + ' USD'
 .row
   .col-md-3.col-sm-12
-    = select_tag 'network', options_for_select(Network.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
+    = select_tag 'network', options_for_select(Network.actived.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
 .row.mb-3
-  .col-6
+  .col-md-6.col-sm-12.mt-2
     .form-check
       = check_box_tag :not_show_zero, 'true', params[:not_show_zero] == 'true', class: 'form-check-input'
       %label.form-check-label{for: 'not_show_zero'} Do not show Zero account
-  .col-6.d-flex.justify-content-end
+  .col-md-6.col-sm-12.d-flex.justify-content-end
     = link_to 'Delete All', bulk_delete_wallets_path, method: :delete, class: 'btn btn-danger float-right', data: { confirm: 'Are you sure?' }
 .row
   .col-12

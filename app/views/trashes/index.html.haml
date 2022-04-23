@@ -1,5 +1,9 @@
 %h1 Listing trashes
 
+.row
+  .col-12
+    = link_to 'New Trash', new_trash_path
+
 %table.table.table-stripped
   %thead
     %tr
@@ -16,6 +20,4 @@
         %td= link_to 'Edit', edit_trash_path(trash)
         %td= link_to 'Destroy', trash, method: :delete, data: { confirm: 'Are you sure?' }
 
-%br
 
-= link_to 'New Trash', new_trash_path

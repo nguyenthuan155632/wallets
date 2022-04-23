@@ -1,8 +1,8 @@
 %h2.mb-4{style: 'word-break: break-word;'}
   = @wallet.address
-.row
+.row.mb-2
   .col-md-3.col-sm-12
-    = select_tag 'network', options_for_select(Network.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
+    = select_tag 'network', options_for_select(Network.actived.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
   .col-md-3.col-sm-12
     %button.btn.btn-primary#refresh
       Refresh
@@ -34,6 +34,8 @@
               Price:
             = token.quote_rate.to_f.ceil(10).to_s
           %a.btn.btn-primary{:href => "https://bscscan.com/address/#{@wallet.address}", target: '_blank'} View on BSCscan
+    %a.trash{href: '#', data: { id: token.id, contract_name: token.contract_name }}
+      Trash
 
 :javascript
   $('#network').on('change', function() {
@@ -51,5 +53,15 @@
         location.reload()
       },
       async: false
+    })
+  })
+
+  $('a.trash').on('click', function() {
+    $.ajax({
+      url: '/tokens/' + $(this).data('id') + '/trash?contract_name=' + $(this).data('contractName'),
+      type: 'DELETE',
+      success: function () {
+        location.reload()
+      }
     })
   })
