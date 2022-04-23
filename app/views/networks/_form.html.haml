@@ -14,6 +14,6 @@
       %td= f.number_field :chain_id
     %tr
       %td= f.label :active
-      %td= f.check_box :active
+      %td= f.check_box :active, {}, 'true', 'false'
   .actions.mt-2.mb-2
     = f.submit 'Save'
