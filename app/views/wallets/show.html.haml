@@ -12,7 +12,7 @@
   .card.mb-2
     .row.no-gutters
       .col-md-2.col-sm-12.text-center
-        %img.card-img{:alt => token.contract_name, src: token.logo_url, style: 'padding: 20px; height: 200px; width: 200px;'}/
+        %img.card-img{:alt => token.contract_name, src: token.logo_url, onerror: "this.onerror=null;this.src='/assets/404.png';", style: 'padding: 20px; height: 200px; width: 200px;'}/
       .col-md-8.col-sm-12
         .card-body
           %h5.card-title
@@ -33,7 +33,10 @@
             %strong
               Price:
             = token.quote_rate.to_f.ceil(10).to_s
-          %a.btn.btn-primary{:href => "https://bscscan.com/address/#{@wallet.address}", target: '_blank'} View on BSCscan
+          - if token.network.scan_url.present?
+            %a.btn.btn-primary{:href => "#{token.network.scan_url}/#{@wallet.address}", target: '_blank'} View on BSCscan
+          - else
+            %a.btn.btn-secondary.disabled{:href => "#", style: 'opacity: 0.4;'} View on BSCscan
     %a.trash{href: '#', data: { id: token.id, contract_name: token.contract_name }}
       Trash
 

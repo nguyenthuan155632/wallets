@@ -4,10 +4,10 @@ class WalletsController < ApplicationController
 
   def index
     @wallets = Wallet.distinct.where(user: current_user).order(:id)
-    if params[:not_show_zero] == 'true'
+    if params[:not_show_small_token] == 'true'
       @wallets =
         @wallets.left_joins(tokens: :network)
-                .where('networks.chain_id = ? AND tokens.balance > ?', params[:chain_id].presence || 56, 0.0)
+                .where('networks.chain_id = ? AND tokens.balance > ?', params[:chain_id].presence || 56, params[:amount])
     end
     @total_balance =
       Token.left_joins(:wallet, :network)

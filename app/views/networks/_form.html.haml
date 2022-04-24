@@ -8,10 +8,13 @@
   %table.table.mt-3
     %tr
       %td= f.label :network_name
-      %td= f.text_field :network_name
+      %td= f.text_field :network_name, class: 'form-control'
     %tr
       %td= f.label :chain_id
-      %td= f.number_field :chain_id
+      %td= f.number_field :chain_id, class: 'form-control'
+    %tr
+      %td= f.label :scan_url
+      %td= f.text_area :scan_url, rows: 5, class: 'form-control'
     %tr
       %td= f.label :active
       %td= f.check_box :active, {}, 'true', 'false'

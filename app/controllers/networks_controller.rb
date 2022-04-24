@@ -60,6 +60,6 @@ class NetworksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def network_params
-      params.require(:network).permit(:network_name, :chain_id, :active)
+      params.require(:network).permit(:network_name, :chain_id, :scan_url, :active)
     end
 end
