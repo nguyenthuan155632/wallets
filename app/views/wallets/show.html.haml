@@ -34,9 +34,15 @@
               Price:
             = token.quote_rate.to_f.ceil(10).to_s
           - if token.network.scan_url.present?
-            %a.btn.btn-primary{:href => "#{token.network.scan_url}/#{@wallet.address}", target: '_blank'} View on BSCscan
+            %a.btn.btn-primary{:href => "#{token.network.scan_url}/#{@wallet.address}", target: '_blank'}
+              View on
+              = token.network.network_name
+              scan
           - else
-            %a.btn.btn-secondary.disabled{:href => "#", style: 'opacity: 0.4;'} View on BSCscan
+            %a.btn.btn-secondary.disabled{:href => "#", style: 'opacity: 0.4;'} 
+              View on
+              = token.network.network_name
+              scan
     %a.trash{href: '#', data: { id: token.id, contract_name: token.contract_name }}
       Trash
 
