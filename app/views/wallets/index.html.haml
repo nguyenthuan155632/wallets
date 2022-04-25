@@ -1,5 +1,3 @@
-%h2.mb-4
-  Wallets
 .row.mb-3
   .col-md-12.col-sm-12.mb-2
     %button.btn.btn-primary.mb-2#refresh
@@ -44,7 +42,7 @@
             %td
               = index
             %td
-              = link_to wallet.address, wallet_path(wallet)
+              = link_to wallet.address[0..5] + '*****' + wallet.address[-5..-1], wallet_path(wallet)
             %td
               = wallet.tokens.left_joins(:network).where('networks.chain_id = ?', params[:chain_id].presence || 56).sum(&:balance).ceil(2).to_s + ' USD'
             %td
