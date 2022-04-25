@@ -35,6 +35,7 @@
           %th #
           %th Address
           %th Balance
+          %th Copy
           %th{style: 'width: 50px'} Actions
       %tbody
         - @wallets.each.with_index(1) do |wallet, index|
@@ -45,6 +46,9 @@
               = link_to wallet.address[0..5] + '*****' + wallet.address[-5..-1], wallet_path(wallet)
             %td
               = wallet.tokens.left_joins(:network).where('networks.chain_id = ?', params[:chain_id].presence || 56).sum(&:balance).ceil(2).to_s + ' USD'
+            %td
+              %a.copy-clipboard{href: '#', data: { address: wallet.address }}
+                %i.fa.fa-clipboard
             %td
               = link_to 'Delete', wallet_path(wallet), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }
         %tr
@@ -93,4 +97,9 @@
       async: true
     })
     alert('Refreshing')
+  })
+
+  $('.copy-clipboard').on('click', function(e) {
+    e.preventDefault()
+    navigator.clipboard.writeText($(this).data('address'))
   })
