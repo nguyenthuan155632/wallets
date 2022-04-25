@@ -11,7 +11,7 @@ class WinnersController < ApplicationController
     winner_list.each do |wn|
       Wallet.where(user: current_user).each do |wallet|
         if wn.include?('*')
-          start_string, end_string = wn.gsub(/\*+/, '*').split('*').map(&:downcase)
+          start_string, end_string = wn.gsub(/\*+/, '*').split('*').map(&:downcase).map(&:strip)
           if wallet.address.downcase.include?(start_string) && wallet.address.downcase.include?(end_string)
             wallets << wallet.id
           end

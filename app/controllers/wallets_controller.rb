@@ -3,7 +3,7 @@ class WalletsController < ApplicationController
   before_action :set_network, only: %i[show]
 
   def index
-    @wallets = Wallet.distinct.where(user: current_user).order(:id)
+    @wallets = Wallet.distinct.bep20.where(user: current_user).order(:id)
     if params[:not_show_small_token] == 'true'
       @wallets =
         @wallets.left_joins(tokens: :network)
@@ -11,7 +11,7 @@ class WalletsController < ApplicationController
     end
     @total_balance =
       Token.left_joins(:wallet, :network)
-           .where('wallets.user_id = ? AND wallets.id IN (?) AND networks.chain_id = ?', current_user.id, @wallets.ids, params[:chain_id].presence || 56)
+           .where('wallets.id IN (?) AND networks.chain_id = ?', @wallets.ids, params[:chain_id].presence || 56)
            .sum(:balance)
            .ceil(2)
   end
@@ -21,13 +21,23 @@ class WalletsController < ApplicationController
     @tokens = @wallet.tokens.where(network: @network)
   end
 
+  def ontologies
+    @wallets = Wallet.includes(:tokens).ontology.where(user: current_user).order(:id)
+    @total_ong = Token.where(wallet: @wallets, contract_name: 'ONG').sum(:balance).ceil(2)
+    @total_ont = Token.where(wallet: @wallets, contract_name: 'ONT').sum(:balance).ceil(2)
+  end
+
+  def ontology
+    @wallet = Wallet.find(params[:id])
+  end
+
   def destroy
     Wallet.find(params[:id]).destroy
     redirect_to wallets_path
   end
 
   def bulk_delete
-    Wallet.where(user: current_user).destroy_all
+    Wallet.where(user: current_user).bep20.destroy_all
     redirect_to wallets_path
   end
 

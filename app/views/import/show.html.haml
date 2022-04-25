@@ -1,10 +1,17 @@
-%h2.mb-4
-  Import Wallet
-= form_tag import_path, method: :post do
-  .row
-    .col-12
-      .mb-3
-        = text_area_tag :wallet_string, nil, class: 'form-control', rows: 20, required: true
-  .row
-    .col-12
-      %button.btn.btn-primary.mb-3{:type => "submit"} Bulk Insert
+.row
+  .col-12
+    %h2.mb-4
+      Import Wallet
+.row
+  .col-12
+    = form_tag import_path, method: :post do
+      .row.mb-2
+        .col-12
+          = select_tag :address_type, options_for_select(Wallet.address_types.map {|k, v| [v, k]})
+      .row
+        .col-12
+          .mb-3
+            = text_area_tag :wallet_string, nil, class: 'form-control', rows: 20, required: true
+      .row
+        .col-12
+          %button.btn.btn-primary.mb-3{:type => "submit"} Bulk Insert

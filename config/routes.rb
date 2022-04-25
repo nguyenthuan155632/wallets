@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   resources :wallets, only: %i[index show destroy] do
     delete :bulk_delete, on: :collection
+    get :ontology, on: :collection, to: 'wallets#ontologies'
+    get :ontology, on: :member
   end
   resources :trashes
   resources :histories, only: %i[index show]
@@ -25,6 +27,7 @@ Rails.application.routes.draw do
   get 'import', to: 'import#show'
   post 'import', to: 'import#create'
   get 'refresh', to: 'refreshes#index'
+  get 'refresh_ontology', to: 'refreshes#ontology'
   get 'winners', to: 'winners#show'
   post 'winners', to: 'winners#create'
 end

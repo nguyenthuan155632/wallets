@@ -1,4 +1,4 @@
-.row.mb-3
+.row.mb-1
   .col-md-12.col-sm-12.mb-2
     %button.btn.btn-primary.mb-2#refresh
       Refresh
@@ -10,8 +10,12 @@
       &nbsp;
       = @total_balance.to_s + ' USD'
 .row
+  .col-12
+    %a.btn.btn-primary.mb-3{href: ontology_wallets_path}
+      Ontology
+.row
   .col-md-3.col-sm-12
-    = select_tag 'network', options_for_select(Network.actived.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
+    = select_tag 'network', options_for_select(Network.have_chain.actived.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
 .row.mb-3
   .col-md-6.col-sm-12.mt-2
     .row

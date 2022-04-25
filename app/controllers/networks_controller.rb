@@ -3,7 +3,7 @@ class NetworksController < ApplicationController
 
   # GET /networks or /networks.json
   def index
-    @networks = Network.where(user: current_user)
+    @networks = Network.where(user: current_user).have_chain
   end
 
   # GET /networks/new

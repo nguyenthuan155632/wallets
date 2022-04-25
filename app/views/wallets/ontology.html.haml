@@ -1,0 +1,45 @@
+%h2.mb-4{style: 'word-break: break-word;'}
+  = @wallet.address
+.row.mb-2
+  .col-md-3.col-sm-12
+    %button.btn.btn-primary#refresh
+      Refresh
+    %a{href: ontology_wallets_path, class: 'btn btn-primary'}
+      Wallets
+- @wallet.tokens.each do |token|
+  .card.mb-2
+    .row.no-gutters
+      .col-12
+        .card-body
+          %h5.card-title
+            = token.contract_ticker_symbol
+          %p.card-text
+            %strong
+              Contract Address:
+            = token.contract_address
+            %br
+            %strong
+              Balance:
+            = token.balance.ceil(2)
+          - if token.network.scan_url.present?
+            %a.btn.btn-primary{:href => "#{token.network.scan_url}/#{@wallet.address}", target: '_blank'}
+              View on
+              = token.network.network_name
+              scan
+          - else
+            %a.btn.btn-secondary.disabled{:href => "#", style: 'opacity: 0.4;'} 
+              View on
+              = token.network.network_name
+              scan
+
+:javascript
+  $('#refresh').on('click', function() {
+    $.ajax({
+      url: '/refresh_ontology?wallet_id=' + "#{params[:id]}",
+      type: 'GET',
+      success: function () {
+        location.reload()
+      },
+      async: false
+    })
+  })

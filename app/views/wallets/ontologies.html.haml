@@ -1,0 +1,65 @@
+.row.mb-1
+  .col-md-12.col-sm-12.mb-2
+    %button.btn.btn-primary.mb-2#refresh
+      Refresh
+    %a{href: prices_path, class: 'btn btn-primary mb-2'}
+      Prices
+    = render '/pages'
+.row
+  .col-12
+    %a.btn.btn-primary.mb-3{href: wallets_path}
+      BEP20
+.row
+  .col-12
+    %strong
+      ONG:
+      = @total_ong
+    |
+    %strong
+      ONT:
+      = @total_ont
+.row
+  .col-12
+    %table.table.table-stripped
+      %thead
+        %tr
+          %th #
+          %th Address
+          %th Balance
+          %th Copy
+          %th{style: 'width: 50px'} Actions
+      %tbody
+        - @wallets.each.with_index(1) do |wallet, index|
+          %tr
+            %td
+              = index
+            %td
+              = link_to wallet.address[0..5] + '*****' + wallet.address[-5..-1], ontology_wallet_path(wallet)
+            %td
+              - tokens = wallet.tokens.where(contract_name: %w[ONG ONT])
+              - tokens.each.with_index(1) do |token, index|
+                %span
+                  = token.balance
+                  = token.contract_name
+                - if index != tokens.count
+                  |
+            %td
+              %a.copy-clipboard{href: '#', data: { address: wallet.address }}
+                %i.fa.fa-clipboard
+            %td
+              = link_to 'Delete', wallet_path(wallet), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' }
+
+:javascript
+  $('#refresh').on('click', function() {
+    $.ajax({
+      url: '/refresh_ontology',
+      type: 'GET',
+      async: true
+    })
+    alert('Refreshing')
+  })
+
+  $('.copy-clipboard').on('click', function(e) {
+    e.preventDefault()
+    navigator.clipboard.writeText($(this).data('address'))
+  })
