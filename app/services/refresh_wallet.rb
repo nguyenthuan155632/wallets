@@ -20,13 +20,15 @@ class RefreshWallet < Patterns::Service
   def items_from_requested_api
     case chain
     when 'bep20'
-      RequestWalletApi.call(address: wallet.address, chain_id: network.chain_id).result.items
+      RequestWalletApi.call(address: wallet.address, chain_id: network.chain_id).result&.items
     when 'ontology'
       RequestOntologyWalletApi.call(address: wallet.address).result
     end
   end
 
   def refresh_bep20_chain
+    return unless items_from_requested_api
+
     items_from_requested_api.each do |item|
       next unless item.contract_name
 
@@ -50,6 +52,8 @@ class RefreshWallet < Patterns::Service
   end
 
   def refresh_ontology_chain
+    return unless items_from_requested_api
+    
     items_from_requested_api.each do |item|
       next unless item.asset_name
 
