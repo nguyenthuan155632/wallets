@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Trash < ApplicationRecord
   after_create :remove_trash_tokens
 

@@ -15,7 +15,7 @@
       Ontology
 .row
   .col-md-3.col-sm-12
-    = select_tag 'network', options_for_select(Network.have_chain.actived.where(user: current_user).pluck(:network_name, :chain_id), params[:chain_id].presence || 56), class: 'form-control mb-3'
+    = select_tag 'network', options_for_select(network_options, current_chain), class: 'form-control mb-3'
 .row.mb-3
   .col-md-6.col-sm-12.mt-2
     .row
@@ -47,9 +47,10 @@
             %td
               = index
             %td
-              = link_to wallet.address[0..5] + '*****' + wallet.address[-5..-1], wallet_path(wallet)
+              - if wallet.address.present?
+                = link_to wallet.address[0..5] + '*****' + wallet.address[-5..-1], wallet_path(wallet)
             %td
-              = wallet.tokens.left_joins(:network).where('networks.chain_id = ?', params[:chain_id].presence || 56).sum(&:balance).ceil(2).to_s + ' USD'
+              = wallet_balance(wallet).to_s + ' USD'
             %td
               %a.copy-clipboard{href: '#', data: { address: wallet.address }}
                 %i.fa.fa-clipboard
@@ -63,6 +64,10 @@
               = @total_balance.to_s + ' USD'
 
 :javascript
+  if (localStorage.getItem('smallTokenNumber')) {
+    $('#small_token_amount').val(localStorage.getItem('smallTokenNumber'))
+  }
+
   $('#network').on('change', function() {
     let queryParams = new URLSearchParams(window.location.search)
     queryParams.set('chain_id', $(this).val())
@@ -90,6 +95,8 @@
       queryParams.set('not_show_small_token', true)
       queryParams.set('amount', $(this).val())
       url = url + '?' + queryParams.toString()
+
+      localStorage.setItem('smallTokenNumber', $(this).val());
     }
     window.location.href = url
   })

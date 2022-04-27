@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'net/http'
 
 # RequestWalletApi.call(address: '0x12d140A35361443977A2AFb38055e54d24908988').result
 class RequestWalletApi < Patterns::Service
-  def initialize(address:, chain_id: 56)
+  def initialize(address:, chain_id: Network::BSC_CHAIN_ID)
     @address = address
     @chain_id = chain_id
     @endpoint = "https://api.covalenthq.com/v1/#{chain_id}/address/#{address}/balances_v2/"

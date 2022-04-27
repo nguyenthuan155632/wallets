@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'net/http'
 
 # RequestOntologyWalletApi.call(address: 'AZ1JxnLVWpXGa5psEM9xHeBHeUzKZ4zsvd').result

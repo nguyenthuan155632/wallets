@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TrashesController < ApplicationController
   before_action :set_trash, only: %i[edit update destroy]
 
@@ -20,7 +22,7 @@ class TrashesController < ApplicationController
 
     respond_to do |format|
       if @trash.save
-        format.html { redirect_to trashes_url, notice: "Trash was successfully created." }
+        format.html { redirect_to trashes_url, notice: 'Trash was successfully created.' }
         format.json { render :show, status: :created, location: @trash }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -33,7 +35,7 @@ class TrashesController < ApplicationController
   def update
     respond_to do |format|
       if @trash.update(trash_params)
-        format.html { redirect_to trashes_url, notice: "Trash was successfully updated." }
+        format.html { redirect_to trashes_url, notice: 'Trash was successfully updated.' }
         format.json { render :show, status: :ok, location: @trash }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -47,19 +49,20 @@ class TrashesController < ApplicationController
     @trash.destroy
 
     respond_to do |format|
-      format.html { redirect_to trashes_url, notice: "Trash was successfully destroyed." }
+      format.html { redirect_to trashes_url, notice: 'Trash was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_trash
-      @trash = Trash.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def trash_params
-      params.require(:trash).permit(:contract_name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_trash
+    @trash = Trash.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def trash_params
+    params.require(:trash).permit(:contract_name)
+  end
 end

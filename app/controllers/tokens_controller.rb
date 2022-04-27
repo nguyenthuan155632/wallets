@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TokensController < ApplicationController
   before_action :set_token, only: %i[trash]
 
@@ -6,8 +8,8 @@ class TokensController < ApplicationController
   end
 
   private
-    def set_token
-      @token = Token.find(params[:id])
-    end
+
+  def set_token
+    @token = Token.find(params[:id])
+  end
 end
-  

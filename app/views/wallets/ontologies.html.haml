@@ -34,7 +34,8 @@
             %td
               = index
             %td
-              = link_to wallet.address[0..5] + '*****' + wallet.address[-5..-1], ontology_wallet_path(wallet)
+              - if wallet.address.present?
+                = link_to wallet.address[0..5] + '*****' + wallet.address[-5..-1], ontology_wallet_path(wallet)
             %td
               - tokens = wallet.tokens.where(contract_name: %w[ONG ONT])
               - tokens.each.with_index(1) do |token, index|

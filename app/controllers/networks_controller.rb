@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NetworksController < ApplicationController
   before_action :set_network, only: %i[edit update destroy]
 
@@ -20,7 +22,7 @@ class NetworksController < ApplicationController
 
     respond_to do |format|
       if @network.save
-        format.html { redirect_to networks_url, notice: "Network was successfully created." }
+        format.html { redirect_to networks_url, notice: 'Network was successfully created.' }
         format.json { render :show, status: :created, location: @network }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -33,7 +35,7 @@ class NetworksController < ApplicationController
   def update
     respond_to do |format|
       if @network.update(network_params)
-        format.html { redirect_to networks_url, notice: "Network was successfully updated." }
+        format.html { redirect_to networks_url, notice: 'Network was successfully updated.' }
         format.json { render :show, status: :ok, location: @network }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -44,22 +46,23 @@ class NetworksController < ApplicationController
 
   # DELETE /networks/1 or /networks/1.json
   def destroy
-    @network.destroy if @network.chain_id != 56
+    @network.destroy if @network.chain_id != Network::BSC_CHAIN_ID
 
     respond_to do |format|
-      format.html { redirect_to networks_url, notice: "Network was successfully destroyed." }
+      format.html { redirect_to networks_url, notice: 'Network was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_network
-      @network = Network.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def network_params
-      params.require(:network).permit(:network_name, :chain_id, :scan_url, :active)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_network
+    @network = Network.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def network_params
+    params.require(:network).permit(:network_name, :chain_id, :scan_url, :active)
+  end
 end

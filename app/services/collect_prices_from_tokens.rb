@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CollectPricesFromTokens < Patterns::Service
   def initialize(user:, network:)
     @user = user
@@ -5,7 +7,8 @@ class CollectPricesFromTokens < Patterns::Service
   end
 
   def call
-    Token.joins(:wallet).where('wallets.user_id = ? AND network_id = ?', user.id, network.id).group_by(&:contract_name).each do |_, tokens|
+    Token.joins(:wallet).where('wallets.user_id = ? AND network_id = ?', user.id,
+                               network.id).group_by(&:contract_name).each do |_, tokens|
       token = tokens.first
       next if Trash.exists?(contract_name: token.contract_name)
 
