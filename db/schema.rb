@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_25_013535) do
+ActiveRecord::Schema.define(version: 2022_04_27_140411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2022_04_25_013535) do
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "quote_rate"
     t.decimal "quote_rate_24h"
+    t.string "number_of_tokens", default: ""
     t.index ["contract_name"], name: "index_tokens_on_contract_name"
     t.index ["network_id"], name: "index_tokens_on_network_id"
     t.index ["wallet_id"], name: "index_tokens_on_wallet_id"

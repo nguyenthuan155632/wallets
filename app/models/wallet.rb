@@ -10,4 +10,8 @@ class Wallet < ApplicationRecord
   }
 
   validates :address, uniqueness: { scope: :user_id, case_sensitive: false, message: 'should be inserted once!' }
+
+  def balance
+    tokens.sum(:balance)
+  end
 end

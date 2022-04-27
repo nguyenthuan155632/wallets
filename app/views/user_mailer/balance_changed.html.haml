@@ -1,0 +1,22 @@
+%ol
+  - wallets.each do |wallet_id, tokens|
+    %li
+      - wallet = Wallet.find(wallet_id)
+      %a{href: '#'}
+        = wallet.address
+      %ul
+        - tokens.each do |token_id, number_of_tokens|
+          %li
+            - token = Token.find(token_id)
+            %strong= token.contract_ticker_symbol
+            - if before[user.id] && before[user.id][wallet_id] && before[user.id][wallet_id][token_id]
+              - if wallet.ontology?
+                = before[user.id][wallet_id][token_id].to_f
+              - else
+                = (before[user.id][wallet_id][token_id].to_f / 1e+18).round(8)
+              %span ->
+            - if wallet.ontology?
+              = after[user.id][wallet_id][token_id].to_f
+            - else
+              = (after[user.id][wallet_id][token_id].to_f / 1e+18).round(8)
+      

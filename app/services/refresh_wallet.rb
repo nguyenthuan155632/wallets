@@ -10,6 +10,7 @@ class RefreshWallet < Patterns::Service
   def call
     refresh_bep20_chain if chain == 'bep20'
     refresh_ontology_chain if chain == 'ontology'
+    wallet
   end
 
   private
@@ -40,7 +41,8 @@ class RefreshWallet < Patterns::Service
         logo_url: item.logo_url,
         balance: item.quote,
         quote_rate: item.quote_rate,
-        quote_rate_24h: item.quote_rate_24h
+        quote_rate_24h: item.quote_rate_24h,
+        number_of_tokens: item.balance
       )
       token.reload
       token.destroy if token.balance.zero?
@@ -58,7 +60,7 @@ class RefreshWallet < Patterns::Service
         contract_ticker_symbol: item.asset_name,
         contract_address: item.contract_hash
       )
-      token.update(balance: item.balance)
+      token.update(balance: item.balance, number_of_tokens: item.balance.to_s)
     end
   end
 end
