@@ -21,7 +21,8 @@ module WalletsHelper
   end
 
   def token_options
-    Token.select(:contract_name, :contract_ticker_symbol)
+    Token.distinct
+         .select(:contract_name, :contract_ticker_symbol)
          .where.not(contract_address: Token::ONTOLOGY_CONTRACT_ADDRESS)
          .order(:contract_ticker_symbol).pluck(:contract_ticker_symbol)
   end
