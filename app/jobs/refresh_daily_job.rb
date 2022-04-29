@@ -44,8 +44,10 @@ class RefreshDailyJob < ApplicationJob
 
     after.each do |user_id, wallets|
       wallets.each do |wallet_id, tokens|
-        tokens.each do |token_id, number_of_tokens|
-          after[user_id][wallet_id].delete(token_id) if after[user_id][wallet_id][token_id] == before[user_id][wallet_id][token_id]
+        tokens.each do |token_id, _number_of_tokens|
+          if after[user_id][wallet_id][token_id] == before[user_id][wallet_id][token_id]
+            after[user_id][wallet_id].delete(token_id)
+          end
         end
         after[user_id].delete(wallet_id) if after[user_id][wallet_id].blank?
       end

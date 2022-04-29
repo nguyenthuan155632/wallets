@@ -5,17 +5,19 @@
     %a{href: prices_path, class: 'btn btn-primary mb-2'}
       Prices
     = render '/pages'
-    %strong.mt-2{style: 'float: right;'}
-      Balance:
-      &nbsp;
-      = @total_balance.to_s + ' USD'
 .row
-  .col-12
+  .col-6
     %a.btn.btn-success.mb-3{href: ontology_wallets_path}
       Ontology
+  .col-6
+    %strong.mt-2{style: 'float: right;'}
+      Balance:
+      = @total_balance.to_s + ' USD'
 .row
   .col-md-3.col-sm-12
     = select_tag 'network', options_for_select(network_options, current_chain), class: 'form-control mb-3'
+  .col-md-3.col-sm-12
+    = select_tag 'token-search', options_for_select(token_options, params[:token]), include_blank: true, class: 'form-control select2'
 .row.mb-3
   .col-md-6.col-sm-12.mt-2
     .row
@@ -71,7 +73,16 @@
   $('#network').on('change', function() {
     let queryParams = new URLSearchParams(window.location.search)
     queryParams.set('chain_id', $(this).val())
-    history.replaceState(null, null, "?"+queryParams.toString())
+    window.location.href = window.location.origin + window.location.pathname + '?' + queryParams.toString()
+  })
+
+  $('#token-search').on('change', function() {
+    let queryParams = new URLSearchParams(window.location.search)
+    if ($(this).val()) {
+      queryParams.set('token', $(this).val())
+    } else {
+      queryParams.delete('token')
+    }
     window.location.href = window.location.origin + window.location.pathname + '?' + queryParams.toString()
   })
 
@@ -82,6 +93,10 @@
     if ($(this).is(':checked')) {
       queryParams.set('not_show_small_token', true)
       queryParams.set('amount', $('#small_token_amount').val())
+      url = url + '?' + queryParams.toString()
+    } else {
+      queryParams.set('not_show_small_token', false)
+      queryParams.delete('amount')
       url = url + '?' + queryParams.toString()
     }
     window.location.href = url

@@ -7,7 +7,11 @@ class WalletsController < ApplicationController
   def index
     chain_id = params[:chain_id].presence || Network::BSC_CHAIN_ID
     @wallets = bep20_wallets
-
+    if params[:token]
+      @wallets =
+        @wallets.left_joins(tokens: :network)
+                .where(networks: { chain_id: chain_id }, tokens: { contract_ticker_symbol: params[:token] })
+    end
     if params[:not_show_small_token] == 'true'
       @wallets =
         @wallets.left_joins(tokens: :network)
