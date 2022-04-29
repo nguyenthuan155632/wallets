@@ -53,7 +53,7 @@ class RefreshWallet < Patterns::Service
 
   def refresh_ontology_chain
     return unless items_from_requested_api
-    
+
     items_from_requested_api.each do |item|
       next unless item.asset_name
 
