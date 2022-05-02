@@ -5,18 +5,19 @@
       %a{href: '#'}
         = wallet.address
       %ul
-        - tokens.each do |token_id, number_of_tokens|
+        - tokens.each do |t|
+          - token = Token.find_by(id: t.token_id)
+          - next unless token
           %li
-            - token = Token.find(token_id)
             %strong= token.contract_ticker_symbol
-            - if before[user.id] && before[user.id][wallet_id] && before[user.id][wallet_id][token_id]
+            - if t.old_number.present?
               - if wallet.ontology?
-                = before[user.id][wallet_id][token_id].to_f
+                = t.old_number.to_f
               - else
-                = (before[user.id][wallet_id][token_id].to_f / 1e+18).round(8)
+                = (t.old_number.to_f / 1e+18).round(8)
               %span ->
             - if wallet.ontology?
-              = after[user.id][wallet_id][token_id].to_f
+              = t.new_number.to_f
             - else
-              = (after[user.id][wallet_id][token_id].to_f / 1e+18).round(8)
+              = (t.new_number.to_f / 1e+18).round(8)
       

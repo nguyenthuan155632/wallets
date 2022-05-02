@@ -3,6 +3,7 @@
 class Network < ApplicationRecord
   BSC_CHAIN_ID = 56
 
+  has_many :tokens, dependent: :destroy
   belongs_to :user
 
   before_save :disallow_inactive_bsc

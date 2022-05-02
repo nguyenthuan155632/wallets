@@ -14,4 +14,10 @@ class Wallet < ApplicationRecord
   def balance
     tokens.sum(:balance)
   end
+
+  def write_token_number_cache(network)
+    tokens.where(network: network).each do |token|
+      Rails.cache.fetch(token.token_number_cache_key) { token.number_of_tokens }
+    end
+  end
 end
